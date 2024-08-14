@@ -1,0 +1,26 @@
+00:00:00.521911 VirtualBox GUI VM Selector Window 7.0.14 r161095 win.amd64 (Jan 15 2024 14:59:30) release log
+00:00:00.521912 Log opened 2024-03-16T10:25:46.106824200Z
+00:00:00.521913 Build Type: release
+00:00:00.521916 OS Product: Windows 11
+00:00:00.521916 OS Release: 10.0.22631
+00:00:00.521917 OS Service Pack: 
+00:00:00.535436 DMI Product Name: ASUS TUF Gaming F15 FX506LI_FX566LI
+00:00:00.538687 DMI Product Version: 1.0
+00:00:00.538701 Firmware type: UEFI
+00:00:00.538873 Secure Boot: VERR_PRIVILEGE_NOT_HELD
+00:00:00.538888 Host RAM: 8029MB (7.8GB) total, 2638MB (2.5GB) available
+00:00:00.538891 Executable: C:\Program Files\Oracle\VirtualBox\VirtualBox.exe
+00:00:00.538892 Process ID: 21640
+00:00:00.538892 Package type: WINDOWS_64BITS_GENERIC
+00:00:00.539035 Qt version: 5.15.2
+00:00:00.539552 GUI: UIMediumEnumerator: Initial medium-enumeration finished!
+00:00:00.560612 GUI: UIMediumEnumerator: Medium-enumeration started...
+00:00:01.649502 GUI: UIMediumEnumerator: Medium-enumeration finished!
+00:02:18.548230 GUI: UIMediumEnumerator: Medium-enumeration finished!
+00:23:41.248920 GUI: UIMediumEnumerator: Medium-enumeration finished!
+00:29:07.037272 GUI: UIMediumEnumerator: Medium-enumeration finished!
+00:30:37.320590 GUI: UIMediumEnumerator: Medium-enumeration finished!
+00:30:53.224942 GUI: UIMediumEnumerator: Medium-enumeration finished!
+00:31:50.526601 GUI: UIMediumEnumerator: Medium-enumeration finished!
+00:41:07.276311 GUI: UICommon: Handling aboutToQuit request..
+00:41:08.426857 GUI: UICommon: aboutToQuit request handled!
