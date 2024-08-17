@@ -1,0 +1,18 @@
+package com.app.repository;
+
+import com.app.entities.Appointment;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+public interface IAppointmentRepo extends JpaRepository<Appointment, Long> {
+    // Custom query methods based on the correct property names
+//    List<Appointment> findByPatientPatientId(int patientId);
+//    List<Appointment> findByDoctorDoctorName(String doctorName);
+	@Query("SELECT a FROM appointments a WHERE a.patient_id = :patientId")
+	List<Appointment> findAppointmentsByPatientId(Long patientId);
+	List<Appointment> findAppointmentsByDoctorName(String doctorName);
+}

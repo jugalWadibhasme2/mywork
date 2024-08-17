@@ -1,0 +1,51 @@
+package com.app.service;
+
+import com.app.entities.Appointment;
+import com.app.repository.IAppointmentRepo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class AppointmentServiceImpl implements AppointmentService {
+
+	@Override
+	public Appointment saveAppointment(Appointment appointment) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Optional<Appointment> getAppointmentById(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Appointment> getAllAppointments() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void deleteAppointment(Long id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<Appointment> findAppointmentsByPatientId(Long patientId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Appointment> findAppointmentsByDoctorName(String doctorName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+    
+}

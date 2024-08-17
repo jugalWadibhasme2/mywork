@@ -1,0 +1,29 @@
+package com.app.dto;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
+@AllArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+public class BaseSignup {
+
+    @NotBlank(message = "Name required")
+	private String name;
+	
+	@Email(message = "Invalid Email!!!")
+	private String email;
+	
+	@JsonProperty(access = Access.WRITE_ONLY)// this property only used during de-ser.
+	private String password;
+	
+	private String contactNumber;
+}

@@ -1,0 +1,114 @@
+package com.app.controller;
+
+import com.app.entities.Appointment;
+import com.app.service.AppointmentService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
+
+@RestController
+@RequestMapping("/api/appointments")
+public class AppointmentController {
+
+    @Autowired
+    private AppointmentService appointmentService;
+
+    /**
+     * Create a new appointment.
+     * 
+     * @param appointment The appointment entity to be created.
+     * @return The created appointment entity.
+     */
+    @PostMapping
+    public ResponseEntity<Appointment> createAppointment(@RequestBody Appointment appointment) {
+        Appointment savedAppointment = appointmentService.saveAppointment(appointment);
+        return new ResponseEntity<>(savedAppointment, HttpStatus.CREATED);
+    }
+
+    /**
+     * Get an appointment by its ID.
+     * 
+     * @param id The ID of the appointment to retrieve.
+     * @return The appointment entity if found, otherwise a 404 Not Found response.
+     */
+    @GetMapping("/{id}")
+    public ResponseEntity<Appointment> getAppointmentById(@PathVariable Long id) {
+        Optional<Appointment> appointment = appointmentService.getAppointmentById(id);
+        return appointment.map(ResponseEntity::ok)
+                          .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    }
+
+    /**
+     * Get all appointments.
+     * 
+     * @return A list of all appointment entities.
+     */
+    @GetMapping
+    public ResponseEntity<List<Appointment>> getAllAppointments() {
+        List<Appointment> appointments = appointmentService.getAllAppointments();
+        return ResponseEntity.ok(appointments);
+    }
+
+    /**
+     * Update an existing appointment.
+     * 
+     * @param id The ID of the appointment to update.
+     * @param appointment The updated appointment entity.
+     * @return The updated appointment entity if found, otherwise a 404 Not Found response.
+     */
+    @PutMapping("/{id}")
+    public ResponseEntity<Appointment> updateAppointment(@PathVariable Long id, @RequestBody Appointment appointment) {
+        Optional<Appointment> existingAppointment = appointmentService.getAppointmentById(id);
+        if (existingAppointment.isPresent()) {
+            appointment.setAppointmentId(id); // Ensure the ID is set for the update
+            Appointment updatedAppointment = appointmentService.saveAppointment(appointment);
+            return ResponseEntity.ok(updatedAppointment);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    /**
+     * Delete an appointment by its ID.
+     * 
+     * @param id The ID of the appointment to delete.
+     * @return A 204 No Content response if the appointment was deleted successfully, otherwise a 404 Not Found response.
+     */
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteAppointment(@PathVariable Long id) {
+        if (appointmentService.getAppointmentById(id).isPresent()) {
+            appointmentService.deleteAppointment(id);
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    /**
+     * Find appointments by patient ID.
+     * 
+     * @param patientId The ID of the patient.
+     * @return A list of appointments associated with the specified patient ID.
+     */
+    @GetMapping("/patient/{patientId}")
+    public ResponseEntity<List<Appointment>> findAppointmentsByPatientId(@PathVariable Long patientId) {
+        List<Appointment> appointments = appointmentService.findAppointmentsByPatientId(patientId);
+        return ResponseEntity.ok(appointments);
+    }
+
+    /**
+     * Find appointments by doctor name.
+     * 
+     * @param doctorName The name of the doctor.
+     * @return A list of appointments associated with the specified doctor name.
+     */
+    @GetMapping("/doctor/{doctorName}")
+    public ResponseEntity<List<Appointment>> findAppointmentsByDoctorName(@PathVariable String doctorName) {
+        List<Appointment> appointments = appointmentService.findAppointmentsByDoctorName(doctorName);
+        return ResponseEntity.ok(appointments);
+    }
+}

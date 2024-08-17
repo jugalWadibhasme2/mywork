@@ -1,0 +1,27 @@
+package com.app.repository;
+
+import com.app.entities.Appointment;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+public interface IAppointmentRepo extends JpaRepository<Appointment, Long> {
+
+    /**
+     * Find appointments by patient ID.
+     * 
+     * @param patientId The ID of the patient.
+     * @return A list of appointments for the specified patient.
+     */
+    List<Appointment> findAppointmentsByPatientId(Long patientId);
+
+    /**
+     * Find appointments by doctor's name.
+     * 
+     * @param doctorName The name of the doctor.
+     * @return A list of appointments for the specified doctor.
+     */
+    List<Appointment> findAppointmentsByDoctorName(String doctorName);
+}

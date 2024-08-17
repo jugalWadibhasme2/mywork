@@ -1,0 +1,30 @@
+package com.app.entities;
+
+import javax.persistence.*;
+import java.util.List;
+import com.app.Enum.Days;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "Schedule")
+public class Schedule {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id; // Add an ID field for the primary key
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "doctor_id", referencedColumnName = "id")
+    private Doctor doctor;
+
+    @ElementCollection
+    @CollectionTable(name = "schedule_available_days", joinColumns = @JoinColumn(name = "schedule_id"))
+    @Column(name = "available_day")
+    private List<Days> availableDays;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "schedule",fetch = FetchType.EAGER)
+    private List<WorkingHour> scheduledWorkingHours;
+}

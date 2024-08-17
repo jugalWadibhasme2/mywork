@@ -1,0 +1,28 @@
+package com.app.entities;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "Appointments")
+public class Appointment {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long appointmentId;
+
+    @ManyToOne
+    @JoinColumn(name = "doctor_id", nullable = false)
+    private Doctor doctor;
+
+    @Column(name = "patient_name", nullable = false)
+    private String patientName;
+
+    @Column(name = "appointment_date", nullable = false)
+    private LocalDateTime appointmentDate;
+
+    @Column(name = "status", nullable = false)
+    private String status;
+
+    // Getters and Setters
+}

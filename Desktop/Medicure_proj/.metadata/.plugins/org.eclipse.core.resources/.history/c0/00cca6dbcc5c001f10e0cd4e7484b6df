@@ -1,0 +1,76 @@
+package com.app.service;
+
+import com.app.entities.Appointment;
+import com.app.repository.IAppointmentRepo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class AppointmentService {
+
+    @Autowired
+    private IAppointmentRepo appointmentRepository;
+
+    /**
+     * Create or Update an Appointment.
+     *
+     * @param appointmentEntity the appointment to be saved.
+     * @return the saved appointment entity.
+     */
+    public IAppointmentRepo saveAppointment(Appointment appointmentEntity) {
+        return appointmentRepository.save(appointmentEntity);
+    }
+
+    /**
+     * Retrieve an Appointment by ID.
+     *
+     * @param id the ID of the appointment to retrieve.
+     * @return an Optional containing the appointment entity if found, or empty otherwise.
+     */
+    public Optional<AppointmentEntity> getAppointmentById(Long id) {
+        return appointmentRepository.findById(id);
+    }
+
+    /**
+     * Retrieve all Appointments.
+     *
+     * @return a list of all appointment entities.
+     */
+    public List<AppointmentEntity> getAllAppointments() {
+        return appointmentRepository.findAll();
+    }
+
+    /**
+     * Delete an Appointment by ID.
+     *
+     * @param id the ID of the appointment to delete.
+     */
+    public void deleteAppointment(Long id) {
+        appointmentRepository.deleteById(id);
+    }
+
+    /**
+     * Find appointments by patient ID.
+     *
+     * @param patientId the ID of the patient whose appointments to find.
+     * @return a list of appointments for the specified patient.
+     */
+    public List<AppointmentEntity> findAppointmentsByPatientId(Long patientId) {
+        // Assuming you have a custom query method in the repository
+        return appointmentRepository.findAppointmentsByPatientId(patientId);
+    }
+
+    /**
+     * Find appointments by doctor name.
+     *
+     * @param doctorName the name of the doctor whose appointments to find.
+     * @return a list of appointments for the specified doctor.
+     */
+    public List<AppointmentEntity> findAppointmentsByDoctorName(String doctorName) {
+        // Assuming you have a custom query method in the repository
+        return appointmentRepository.findAppointmentsByDoctorName(doctorName);
+    }
+}

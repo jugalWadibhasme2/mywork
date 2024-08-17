@@ -1,0 +1,37 @@
+package com.app.controller;
+import java.time.LocalDateTime;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.app.service.AppointmentService;
+
+import org.springframework.web.bind.annotation.PostMapping;
+
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.app.entities.Appointment;
+
+
+@RestController
+@RequestMapping("/appointment/f")
+public class AppointmentController {
+
+   @Autowired 
+   private AppointmentService appointmentService;
+
+   @PostMapping
+   public Appointment addAppointment(
+    @RequestParam int doctorId,
+    @RequestParam int patientId,
+    @RequestParam String patientName,
+    @RequestParam LocalDateTime startTime ,
+    @RequestParam LocalDateTime endTime){
+      return appointmentService.bookAppointment(doctorId,patientId,patientName,startTime,endTime);
+    }
+
+   }
+    
+
+

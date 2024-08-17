@@ -1,0 +1,15 @@
+package com.app.repository;
+import com.app.entities.*;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import java.util.List;
+
+
+public interface IAppointmentRepo extends JpaRepository<Appointment, Integer> {
+
+    @Query("Select b from appointment b where b.patentID = : patentID ")
+    List<Appointment> findAppointmentByPatientId(@Param("patientID")int patientID);
+}

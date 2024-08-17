@@ -1,0 +1,28 @@
+package com.app.repository;
+
+import com.app.entities.Appointment;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface IAppointmentRepo extends JpaRepository<Appointment,Integer> {
+
+   
+    Appointment saveAppointment(Appointment appointment);
+
+    
+    Optional<Appointment> getAppointmentById(Long id);
+    
+   
+  //  List<Appointment> getAllAppointments();
+
+    
+    //void deleteAppointment(Long id);
+
+   
+    List<Appointment> findAppointmentsByPatientId(Long patientId);
+
+    List<Appointment> findAppointmentsByDoctorName(String doctorName);
+}

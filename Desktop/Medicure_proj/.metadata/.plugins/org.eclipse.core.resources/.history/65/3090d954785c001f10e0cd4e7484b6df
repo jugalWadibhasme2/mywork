@@ -1,0 +1,78 @@
+package com.app.service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import com.app.Enum.Role;
+import com.app.Exception.ApiException;
+import com.app.Exception.ResourceNotFoundException;
+import com.app.dto.PatientDto;
+import com.app.dto.PatientSignup;
+import com.app.entities.Patient;
+import com.app.repository.IPatientRepo;
+
+public class PatientServiceImpl implements PatientService{
+
+    @Autowired
+    private IPatientRepo patientDao;
+    
+    @Autowired
+	private ModelMapper mapper;
+	
+	@Autowired
+	private PasswordEncoder encoder;
+
+    @Override
+    public PatientSignup patientRegistration(PatientSignup reqDto) {
+        // TODO Auto-generated method stub
+        Patient patient = mapper.map(reqDto,Patient.class);
+
+        if(patientDao.existsByEmail(reqDto.getEmail()))
+			throw new ApiException("Email already exist !");
+		
+		patient.setPassword(encoder.encode(patient.getPassword()));
+		patient.setRole(Role.PATIENT); 
+		return mapper.map(patientDao.save(patient), PatientSignup.class);
+    }
+
+    @Override
+    public List<PatientDto> displayAllPatient() {
+        // TODO Auto-generated method stub
+        List<Patient> patients=patientDao.findAll();
+		return patients.stream().map(user->mapper.map(user, PatientDto.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public void deletePateint(int id) {
+        // TODO Auto-generated method stub
+        Patient patient = patientDao.findById(id).orElseThrow(() -> new RuntimeException("Farmer not found"));
+        patientDao.delete(patient);
+    }
+
+    @Override
+    public PatientDto updatePatient(int patientId, PatientDto updatePatient) {
+        // TODO Auto-generated method stub
+        Patient patient=patientDao.findById(patientId)
+				.orElseThrow(()-> new ResourceNotFoundException("Farmer not found with ID: " + patientId));
+		
+		mapper.map(updatePatient, patient);
+		
+		patient=patientDao.save(patient);
+		
+		return mapper.map(patient, PatientDto.class);
+    }
+
+    @Override
+    public PatientDto getPatientById(int patientId) {
+        // TODO Auto-generated method stub
+        Patient patient=patientDao.findById(patientId).orElseThrow(()-> new ResourceNotFoundException("Farmer not found"));
+		
+		return mapper.map(patient, PatientDto.class);
+    }
+    
+
+}

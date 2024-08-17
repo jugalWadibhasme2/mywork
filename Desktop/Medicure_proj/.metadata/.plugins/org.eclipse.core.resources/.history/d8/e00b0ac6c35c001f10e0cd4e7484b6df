@@ -1,0 +1,51 @@
+package com.app.service;
+
+
+
+import java.time.LocalDateTime;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.app.entities.Appointment;
+import com.app.entities.Doctor;
+import com.app.entities.Patient;
+import com.app.repository.IAppointmentRepo;
+import com.app.repository.IDoctorRepo;
+import com.app.repository.IPatientRepo;
+
+@Service
+public class AppointmentService {
+    
+    @Autowired
+    private IAppointmentRepo appointmentRepo;
+
+    @Autowired
+    private IDoctorRepo doctorRepo;
+    @Autowired
+    private IPatientRepo patientRepo;
+
+    public Appointment bookAppointment(int doctorId,int patientId, String patientName,LocalDateTime startTime, LocalDateTime endTime) {
+        Optional<Doctor> DoctorOpt = doctorRepo.findById(doctorId);
+        if (!DoctorOpt.isPresent()) {
+            throw new RuntimeException("Instrument not found");
+        }
+    
+            Optional<Patient> patientOpt = patientRepo.findById(patientId);
+            if (!patientOpt.isPresent()) {
+                throw new RuntimeException("Farmer not found");
+            }
+    
+            Appointment appointmentBooking = new Appointment();
+            appointmentBooking.setDoctor(doctorId);
+            appointmentBooking.setPatient(patientId);
+            // appointmentBooking.set(null); // Since only patient can book
+            appointmentBooking.setStartTime(startTime);
+            appointmentBooking.setEndTime(endTime);
+    
+            return appointmentRepo.save(appointmentBooking);
+        }
+
+
+}

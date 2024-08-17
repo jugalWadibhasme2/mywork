@@ -1,0 +1,55 @@
+package com.app.service;
+
+import java.util.Optional;
+
+
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+
+import com.app.entities.Doctor;
+import com.app.entities.Patient;
+import com.app.entities.User;
+import com.app.Enum.Role;
+import com.app.repository.IDoctorRepo;
+import com.app.repository.IPatientRepo;
+
+
+@Service
+public class UserService {
+
+    private final IPatientRepo patientRepository;
+ 
+    private final IDoctorRepo doctorRepository;
+    
+    private final PasswordEncoder passwordEncoder;
+
+    public UserService(IPatientRepo patientRepository, IDoctorRepo doctorRepository,
+                       PasswordEncoder passwordEncoder) {
+        this.doctorRepository = doctorRepository;
+        this.patientRepository = patientRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    public Patient registerPatient(Patient patient) {
+        patient.setPassword(passwordEncoder.encode(patient.getPassword()));
+        patient.setRole(Role.PATIENT);
+        return patientRepository.save(patient);
+    }
+
+    public Doctor registerDoctor(Doctor doctor) {
+        doctor.setPassword(passwordEncoder.encode(doctor.getPassword()));
+        doctor.setRole(Role.DOCTOR);
+        return doctorRepository.save(doctor);
+    }
+
+    public Optional<? extends User> findById(int id) {
+        Optional<Patient> patient = patientRepository.findById(id);
+        if (patient.isPresent()) return patient;
+
+        // Optional<Doctor> doctor = doctorRepository.findById(id);
+        // if (patient.isPresent()) return patient;
+        
+        return doctorRepository.findById(id);
+    }
+}

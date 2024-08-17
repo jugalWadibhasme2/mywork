@@ -1,0 +1,31 @@
+package com.app.entities;
+
+import javax.persistence.*;
+import java.util.List;
+
+@Entity
+@Table(name = "Doctors")
+public class Doctor extends User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "doctor_id")
+    private int doctorId;
+
+    @Column(name = "Doctor_name", nullable = false)
+    private String doctorName;
+
+    @Column(name = "qualification", nullable = false)
+    private String qualification;
+
+    @Column(name = "availability", nullable = false)
+    private String availability;
+
+    @OneToMany(mappedBy = "doctor", fetch = FetchType.EAGER)
+    private List<Appointment> doctorAppointments;
+
+    @OneToOne(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Schedule schedule;
+
+    // Getters and Setters
+}

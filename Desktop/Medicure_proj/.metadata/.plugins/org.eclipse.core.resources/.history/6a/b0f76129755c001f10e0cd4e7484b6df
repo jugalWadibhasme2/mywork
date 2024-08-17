@@ -1,0 +1,40 @@
+package com.app.entities;
+
+import java.util.List;
+
+import javax.persistence.*;
+
+import com.app.Enum.Role;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
+@Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "Doctors")
+public class Doctor extends User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int doctorId;
+
+    @Column(name = "Doctor_name", nullable = false)
+    private String doctorName;
+
+    @Column(name = "qualification", nullable = false)
+    private String specialization;
+
+    @Column(name = "Availability", nullable = false)
+    private String availability;
+
+    @Enumerated(EnumType.STRING)
+    private Role role = Role.DOCTOR;
+
+    @OneToMany(mappedBy = "doctor", fetch = FetchType.EAGER)
+    private List<Appointment> doctorAppointments;
+
+    @OneToOne(mappedBy = "doctor")
+    private Schedule schedule;
+
+    // Getters and Setters (if using Lombok, they might be automatically generated)
+}

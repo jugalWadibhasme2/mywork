@@ -1,0 +1,31 @@
+package com.app.security;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+import com.app.repository.IDoctorRepo;
+
+@Service
+public class CustomUserDetailService implements UserDetailsService{
+
+    @Autowired
+    private IDoctorRepo doctorRepository;
+
+    @Autowired
+    private IDoctorRepo patientRepository;
+
+   
+
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        // TODO Auto-generated method stub
+        UserDetails user = doctorRepository.findByUserName(username).map(doctor -> new CustomUserDetails(doctor))
+        .orElseGet(() -> patientRepository.findByUserName(username).map(patient -> new CustomUserDetails(patient))
+                                .orElseThrow(() -> new UsernameNotFoundException("User not found")));
+        return user;
+    }
+
+}

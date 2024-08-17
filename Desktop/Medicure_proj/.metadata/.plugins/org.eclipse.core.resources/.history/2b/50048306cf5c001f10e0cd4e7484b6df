@@ -1,0 +1,38 @@
+impoet
+
+@Service
+public class AppointmentServiceImpl implements AppointmentService {
+
+    @Autowired
+    private IAppointmentRepo appointmentRepository;
+
+    @Override
+    public Appointment saveAppointment(Appointment appointment) {
+        return appointmentRepository.save(appointment);
+    }
+
+    @Override
+    public Optional<Appointment> getAppointmentById(Long id) {
+        return appointmentRepository.findById(id);
+    }
+
+    @Override
+    public List<Appointment> getAllAppointments() {
+        return appointmentRepository.findAll();
+    }
+
+    @Override
+    public void deleteAppointment(Long id) {
+        appointmentRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Appointment> findAppointmentsByPatientId(Long patientId) {
+        return appointmentRepository.findAppointmentsByPatientId(patientId);
+    }
+
+    @Override
+    public List<Appointment> findAppointmentsByDoctorName(String doctorName) {
+        return appointmentRepository.findAppointmentsByDoctorName(doctorName);
+    }
+}
