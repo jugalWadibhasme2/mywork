@@ -2,6 +2,8 @@ package com.app.controller;
 
 import com.app.entities.Appointment;
 import com.app.service.AppointmentService;
+import com.app.service.IAppointmentService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +17,7 @@ import java.util.Optional;
 public class AppointmentController {
 
     @Autowired
-    private AppointmentService appointmentService;
+    private IAppointmentService appointmentService;
 
     
     @PostMapping

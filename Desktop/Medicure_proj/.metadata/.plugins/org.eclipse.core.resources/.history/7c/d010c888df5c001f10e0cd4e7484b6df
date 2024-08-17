@@ -1,0 +1,43 @@
+package com.app.dto;
+
+import com.app.entities.Doctor;
+import com.app.entities.Patient;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class AppointmentDto {
+
+    private Long appointmentId;
+    private PatientDto patient;
+    private DoctorDto doctor;
+
+    // Inner DTO classes for Patient and Doctor
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class PatientDto {
+        private int patientId;
+        private String firstName;
+        private String lastName;
+        private String email;
+        private String contactNumber;
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class DoctorDto {
+        private Long doctorId;
+        private String doctorName;
+        private String qualification;
+        private String availability;
+    }
+}

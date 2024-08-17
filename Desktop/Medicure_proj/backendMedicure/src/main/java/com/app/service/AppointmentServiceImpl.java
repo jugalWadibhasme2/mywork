@@ -10,7 +10,7 @@ import com.app.entities.Appointment;
 import com.app.repository.IAppointmentRepo;
 
 @Service
-public class AppointmentServiceImpl implements AppointmentService {
+public class AppointmentServiceImpl implements IAppointmentService {
 
     @Autowired
     private IAppointmentRepo appointmentRepository;
